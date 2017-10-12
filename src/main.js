@@ -11,16 +11,22 @@ import vueResource from 'vue-resource';
 // 绑定到vue中
 Vue.use(vueResource);
 
+//A. 导入路由改变时 触发的组件
+import home from './components/home/home.vue';
 
-var vm = new Vue({
-	//通过render对象 注册App组件 让所有的子组件都依赖App这个主组件进行页面的渲染
-	//render:function(create){create(App)} ES5 函数的写法的写法
-	render:c=>c(App);// ES6 的函数的写法
-});
+//B. 定义路由规则 在vue对象中必须注册
+var router = new vueRouter({
+	// 是一个数组 routes
+	routes:[
+		{path:'/home',component:home}
+	]
+		
+})
+
 
 // 下面是导入我们需要的css样式文件
 //1.自定义的样式文件 mobile-base.css 因为是直接使用 所以直接导入css文件即可
-import '../statics/css/mobile-base.css'; // 初始化css
+import '../statics/css/mobile_base.css'; // 初始化css
 import '../statics/css/site.css';        // 全局css
 // mui ui组件  因为是本地css文件 直接导入
 import '../statics/mui/css/mui.css';     // mui 组件css
@@ -33,7 +39,16 @@ Vue.use(mintUI);
 // 同时必须引入mint-ui的样式 根据文档引入样式
 import 'mint-ui/lib/style.css';
 
-
+ new Vue({
+ 	el:'#app',
+ 	//  上面定义了路由规则 下面注册路由
+ 	// router ES6写法
+ 	router:router, // ES5写法
+	//通过render对象 注册App组件 让所有的子组件都依赖App这个主组件进行页面的渲染
+	//render:function(create){create(App)} //ES5 函数的写法的写法
+	//render:c=>c(App)// ES6 的函数的写法
+	render:c=>c(App)  // es6的函数写法 =>：goes to
+});
 
 
 
